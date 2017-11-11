@@ -28,7 +28,6 @@ module.exports = function(cmd, msg) {
 		data = data.toString('utf8');
 		for(let i = 0; i < data.length; i += 1950) {
 			const segment = data.substring(i, i+1950).replace(/`/g, '\u1fef');
-			console.log(segment.length);
 			lastCall = lastCall.then(() => reply("```"+segment+"```"));
 		}
 	});
