@@ -23,8 +23,7 @@ module.exports = function(cmd, msg) {
 		return msg.reply("["+id+"] "+segment);
 	}
 
-	const firstCall = Promise.resolve();
-	let lastCall = firstCall;
+	let lastCall = Promise.resolve();
 	proc.stdout.on('data', data => {
 		data = data.toString('utf8');
 		for(let i = 0; i < data.length; i += 1950) {
@@ -41,7 +40,7 @@ module.exports = function(cmd, msg) {
 	});
 
 	proc.on('close', code => {
-		if(code != 0 || lastCall === firstCall) lastCall = lastCall.then(() => msg.reply("["+id+"] exited with code "+code));
+		lastCall = lastCall.then(() => msg.reply("["+id+"] exited with code "+code));
 		lastCall.then(function() {
 			delete module.exports.cache[id];
 		});
