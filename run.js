@@ -45,6 +45,8 @@ module.exports = function(cmd, msg) {
 			delete module.exports.cache[id];
 		});
 	});
+
+	proc.stdin.end();
 };
 
 module.exports.cache = {};
